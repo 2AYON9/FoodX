@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Restaurant Menu</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container{
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align: center;
+}
+
+.top-row{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* MENU SECTION */
+.menu-section{
+    background: #fff3e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+/* TABLE STYLE FOR HALF/FULL */
+.menu-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.menu-table th{
+    text-align: right;
+    padding-bottom: 5px;
+    color: #d84315;
+}
+
+.menu-table td{
+    padding: 5px 0;
+}
+
+.item-name{
+    width: 60%;
+}
+
+.price{
+    text-align: right;
+    font-weight: bold;
+}
+
+/* SEARCH BAR */
+#search{
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+/* HIGHLIGHT ANIMATION */
+@keyframes highlight {
+    from { background-color: #fff176; }
+    to { background-color: #fff3e0; }
+}
+
+.highlight {
+    animation: highlight 1s ease-in-out;
+}
+
+@media (max-width: 600px){
+    .top-row{
+        flex-direction: column;
+    }
+}
+/* HEADER WITH LOGO (TOP LEFT – ZOMATO STYLE) */
+.header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.header img{
+    width: 200px;
+    height: auto;
+}
+
+</style>
+
+<script>
+function filterMenuDropdown() {
+    var selected = document.getElementById("category").value;
+    var sections = document.getElementsByClassName("menu-section");
+
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = "none";
+        sections[i].classList.remove("highlight");
+    }
+
+    if (selected === "all") {
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].style.display = "block";
+            sections[i].classList.add("highlight");
+        }
+    } else {
+        var sec = document.getElementById(selected);
+        if (sec) {
+            sec.style.display = "block";
+            sec.classList.add("highlight");
+        }
+    }
+}
+
+function searchMenu(){
+    var input = document.getElementById("search").value.toLowerCase();
+    document.getElementById("category").value = "all";
+
+    var sections = document.getElementsByClassName("menu-section");
+
+    for (var i = 0; i < sections.length; i++) {
+        var rows = sections[i].getElementsByTagName("tr");
+        var sectionHasMatch = false;
+
+        for (var j = 1; j < rows.length; j++) {
+            var text = rows[j].innerText.toLowerCase();
+
+            if (text.includes(input)) {
+                rows[j].style.display = "table-row";
+                sectionHasMatch = true;
+            } else {
+                rows[j].style.display = "none";
+            }
+        }
+
+        if (sectionHasMatch || input === "") {
+            sections[i].style.display = "block";
+        } else {
+            sections[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+</head>
+
+<body onload="filterMenuDropdown()">
+
+<div class="container">
+ <!-- HEADER WITH LOGO -->
+<div class="header">
+    <img src="FOODX-LOGO.png" alt="Food X Logo">
+</div>
+   
+
+<h1>MENU CARD</h1>
+<p style="text-align:center;">What do you want to eat?</p>
+
+<div class="top-row">
+<select id="category" onchange="filterMenuDropdown()">
+    <option value="all">All Categories</option>
+    <option value="biryani">Biryani</option>
+    <option value="pulao">Pulao</option>
+    <option value="friedrice">Fried Rice</option>
+    <option value="curry">Curry Items</option>
+    <option value="dryfry">Dry Fry</option>
+    <option value="burger">Burger</option>
+    <option value="roll">Roll</option>
+    <option value="momo">Chicken Momo</option>
+    <option value="soup">Soup</option>
+    <option value="noodles">Noodles</option>
+</select>
+</div>
+
+<input type="text" id="search" placeholder="🔍 Search food..." onkeyup="searchMenu()">
+
+<hr>
+
+<!-- ========== BIRYANI (HALF/FULL HEADER) ========== -->
+<div id="biryani" class="menu-section">
+<h2>Biryani</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Half</th>
+    <th>Full</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Biryani</td>
+    <td class="price">₹80</td>
+    <td class="price">₹150</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Biryani</td>
+    <td class="price">₹90</td>
+    <td class="price">₹170</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Egg Biryani</td>
+    <td class="price">₹120</td>
+    <td class="price">₹230</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== PULAO ========== -->
+<div id="pulao" class="menu-section">
+<h2>Pulao</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Half</th>
+    <th>Full</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Pulao</td>
+    <td class="price">₹80</td>
+    <td class="price">₹150</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Pulao</td>
+    <td class="price">₹90</td>
+    <td class="price">₹170</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Pulao</td>
+    <td class="price">₹100</td>
+    <td class="price">₹190</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== FRIED RICE ========== -->
+<div id="friedrice" class="menu-section">
+<h2>Fried Rice</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Half</th>
+    <th>Full</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Fried Rice</td>
+    <td class="price">₹60</td>
+    <td class="price">₹110</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Fried Rice</td>
+    <td class="price">₹70</td>
+    <td class="price">₹130</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Fried Rice</td>
+    <td class="price">₹80</td>
+    <td class="price">₹150</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Schezwan Fried Rice</td>
+    <td class="price">₹100</td>
+    <td class="price">₹190</td>
+</tr>
+<tr>
+    <td class="item-name">Mix Special Fried Rice</td>
+    <td class="price">₹120</td>
+    <td class="price">₹230</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== CURRY ========== -->
+<div id="curry" class="menu-section">
+<h2>Curry Items</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Half</th>
+    <th>Full</th>
+</tr>
+<tr>
+    <td class="item-name">Chicken Curry</td>
+    <td class="price">₹120</td>
+    <td class="price">₹230</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Masala</td>
+    <td class="price">₹160</td>
+    <td class="price">₹300</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Butter Masala</td>
+    <td class="price">₹200</td>
+    <td class="price">₹380</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== DRY FRY ========== -->
+<div id="dryfry" class="menu-section">
+<h2>Dry Fry</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td class="item-name">Chicken Dry Fry (8 pcs)</td>
+    <td class="price">₹160</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Dry Fry Boneless (8 pcs)</td>
+    <td class="price">₹200</td>
+</tr>
+<tr>
+    <td class="item-name">Chilli Chicken (8 pcs)</td>
+    <td class="price">₹220</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Drumstick (1 pc)</td>
+    <td class="price">₹70</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== BURGER ========== -->
+<div id="burger" class="menu-section">
+<h2>Burger</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Mayonnaise Burger</td>
+    <td class="price">₹50</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Mayonnaise Burger</td>
+    <td class="price">₹60</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Mayonnaise Burger</td>
+    <td class="price">₹70</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== ROLL ========== -->
+<div id="roll" class="menu-section">
+<h2>Roll</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Mayonnaise Roll</td>
+    <td class="price">₹60</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Mayonnaise Roll</td>
+    <td class="price">₹70</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Mayonnaise Roll</td>
+    <td class="price">₹80</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== MOMO ========== -->
+<div id="momo" class="menu-section">
+<h2>Chicken Momo</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td class="item-name">Steamed Momo</td>
+    <td class="price">₹50</td>
+</tr>
+<tr>
+    <td class="item-name">Fried Momo</td>
+    <td class="price">₹70</td>
+</tr>
+<tr>
+    <td class="item-name">Pan Fried Momo</td>
+    <td class="price">₹90</td>
+</tr>
+<tr>
+    <td class="item-name">Masala Momo</td>
+    <td class="price">₹100</td>
+</tr>
+<tr>
+    <td class="item-name">Special Momo</td>
+    <td class="price">₹120</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== SOUP ========== -->
+<div id="soup" class="menu-section">
+<h2>Soup</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td class="item-name">Chicken Soup</td>
+    <td class="price">₹10/100ml</td>
+</tr>
+</table>
+</div>
+
+<!-- ========== NOODLES ========== -->
+<div id="noodles" class="menu-section">
+<h2>Noodles</h2>
+
+<table class="menu-table">
+<tr>
+    <th class="item-name"></th>
+    <th>Half</th>
+    <th>Full</th>
+</tr>
+<tr>
+    <td class="item-name">Veg Noodles</td>
+    <td class="price">₹50</td>
+    <td class="price">₹90</td>
+</tr>
+<tr>
+    <td class="item-name">Egg Noodles</td>
+    <td class="price">₹60</td>
+    <td class="price">₹110</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Noodles</td>
+    <td class="price">₹70</td>
+    <td class="price">₹130</td>
+</tr>
+<tr>
+    <td class="item-name">Chicken Schezwan Noodles</td>
+    <td class="price">₹90</td>
+    <td class="price">₹170</td>
+</tr>
+<tr>
+    <td class="item-name">Mix Special Noodles</td>
+    <td class="price">₹100</td>
+    <td class="price">₹190</td>
+</tr>
+</table>
+</div>
+
+</div>
+</body>
+</html>
+
